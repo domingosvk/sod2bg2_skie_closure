@@ -1,0 +1,16 @@
+// courier spawn check, add to areas where courier can reach party
+// intended for Athkhatla open door areas
+IF
+  OR(2)
+    Global("SOD2BG2_STATE","GLOBAL",4)
+    Global("SOD2BG2_STATE","GLOBAL",6)
+  GlobalTimerExpired("SOD2BG2_TIMER","GLOBAL")
+  AreaType(OUTDOOR)
+  TimeOfDay(DAY)
+  CombatCounter(0)
+  !Exists("SD2SKCR")
+THEN
+  RESPONSE #100
+    IncrementGlobal("SOD2BG2_STATE","GLOBAL",1)
+    CreateCreatureObjectOffScreen("SD2SKCR",Player1,0,0,0)
+END

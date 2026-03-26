@@ -1,0 +1,69 @@
+// 20k offer accepted, gold below 5k
+EXTEND_BOTTOM ~GAELAN~ 42
+  IF ~Global("SOD2BG2_STATE","GLOBAL",2)~ THEN REPLY @2000 GOTO SD2SK_GAELAN_FIRST
+  IF ~Global("SOD2BG2_STATE","GLOBAL",3)~ THEN REPLY @2001 GOTO SD2SK_GAELAN_REPEAT
+END
+
+// 20k offer accepted, gold between 5k and 15k
+EXTEND_BOTTOM ~GAELAN~ 49
+  IF ~Global("SOD2BG2_STATE","GLOBAL",2)~ THEN REPLY @2000 GOTO SD2SK_GAELAN_FIRST
+  IF ~Global("SOD2BG2_STATE","GLOBAL",3)~ THEN REPLY @2001 GOTO SD2SK_GAELAN_REPEAT
+END
+
+// 20k offer accepted, gold above 15k
+EXTEND_BOTTOM ~GAELAN~ 51
+  IF ~Global("SOD2BG2_STATE","GLOBAL",2)~ THEN REPLY @2000 GOTO SD2SK_GAELAN_FIRST
+  IF ~Global("SOD2BG2_STATE","GLOBAL",3)~ THEN REPLY @2001 GOTO SD2SK_GAELAN_REPEAT
+END
+
+// met with bodhi, her offer not accepted
+EXTEND_BOTTOM ~GAELAN~ 60
+  IF ~Global("SOD2BG2_STATE","GLOBAL",2)~ THEN REPLY @2000 GOTO SD2SK_GAELAN_FIRST
+  IF ~Global("SOD2BG2_STATE","GLOBAL",3)~ THEN REPLY @2001 GOTO SD2SK_GAELAN_REPEAT
+END
+
+// 20k offer paid, gaelan is still there - last chance for skie closure before he despawns after doing business with Linvail
+EXTEND_BOTTOM ~GAELAN~ 67
+  IF ~Global("SOD2BG2_STATE","GLOBAL",2)~ THEN REPLY @2000 GOTO SD2SK_GAELAN_FIRST
+  IF ~Global("SOD2BG2_STATE","GLOBAL",3)~ THEN REPLY @2001 GOTO SD2SK_GAELAN_REPEAT
+END
+
+APPEND ~GAELAN~
+
+  // first time talk - some banter, follow immediately to proposal
+  IF ~~ THEN BEGIN SD2SK_GAELAN_FIRST
+    SAY @2010
+    IF ~~ THEN GOTO SD2SK_GAELAN_PROPOSAL
+  END
+
+  // proposal, choices: accept (if >199g), reject
+  IF ~~ THEN BEGIN SD2SK_GAELAN_PROPOSAL
+    SAY @2011
+    IF ~PartyGoldGT(199)~ THEN REPLY @2020 GOTO SD2SK_GAELAN_PAY
+    IF ~~ THEN REPLY @2021 DO ~
+      SetGlobal("SOD2BG2_STATE","GLOBAL",3)
+    ~
+    UNSOLVED_JOURNAL @1002
+    EXIT
+  END
+
+  // repeat offer
+  IF ~~ THEN BEGIN SD2SK_GAELAN_REPEAT
+    SAY @2012
+    IF ~PartyGoldGT(199)~ THEN REPLY @2020 GOTO SD2SK_GAELAN_PAY
+    IF ~~ THEN REPLY @2021 EXIT
+  END
+
+  // offer accepted - advance quest, start timer
+  IF ~~ THEN BEGIN SD2SK_GAELAN_PAY
+    SAY @2030
+    IF ~~ THEN REPLY @2031 DO ~
+      TakePartyGold(200)
+      SetGlobal("SOD2BG2_STATE","GLOBAL",4)
+      SetGlobalTimer("SOD2BG2_TIMER","GLOBAL",FOUR_HOURS)
+    ~
+    UNSOLVED_JOURNAL @1003
+    EXIT
+  END
+
+END

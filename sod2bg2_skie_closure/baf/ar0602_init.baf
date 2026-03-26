@@ -1,0 +1,13 @@
+// intended for AR0602 (Irenicus' Dungeon level 1) only
+// starts import from Siege of Dragonspear and quest not initialized - should run once only
+IF
+  Global("BD_HAVE_SOD","GLOBAL",1)
+  Global("SOD2BG2_STATE","GLOBAL",0)
+THEN
+  RESPONSE #100
+    // initialize quest - insert items into irenicus' personal chest
+    SetGlobal("SOD2BG2_STATE","GLOBAL",1)
+    ActionOverride("Chest2",CreateItem("SD2SKDG",0,0,0))
+    ActionOverride("Chest2",CreateItem("SD2SKNT",0,0,0))
+    Continue()
+END

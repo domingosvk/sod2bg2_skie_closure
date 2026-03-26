@@ -1,0 +1,140 @@
+// mod conflict
+@1 = ~Skie: The Cost of One Girl's Soul (SkieCost) is already installed. sod2bg2_skie_closure cannot be installed alongside it.~
+
+
+// soultaker dagger description (name stays original: Soultaker Dagger)
+@102 = ~This dagger is of dark, polished metal, narrow in the blade and elegantly balanced for the hand.
+Its edge is flawless, its weight precise, and its surface faintly warm to the touch.
+
+Yet the presence within is not hostile, nor alien.
+It feels unmistakably feminine ... but terrified, shocked, and shattered by some sudden horror.
+What remains in the blade is not rage, but the raw, trembling imprint of someone who should have been allowed to die and instead was bound in panic to cold steel.
+
+And as you hold it, something else stirs beneath the fear - faint, fragile, but undeniable.
+A flicker of recognition, a trace of hope.
+As if whatever is bound within senses you... and dares, for a moment, to believe.
+
+This dagger is not meant to kill, but to keep.
+
+STATISTICS:
+
+Damage: 1d4 (piercing)
+Speed Factor: 2 
+Proficiency Type: Dagger
+Type: One-handed
+Requires:
+ 3 Strength
+
+Weight: 1~
+
+// irenicus reminder note description (name stays original: Note)
+@104 = ~Skie Silvershield.
+
+Essence secured within the blade. No degradation observed.
+
+Sufficient for later use.
+
+-J.~
+
+// letter from entar name, description
+@105 = ~Sealed Letter~
+@106 = ~To the one wronged by my judgment,
+
+My daughter lives.
+
+Through means I scarcely understand, she has been restored to us. Her memories are fractured, but clear in one matter - you were not her killer.
+
+For this, you have my gratitude... and my apology.
+
+The one responsible lies beyond the reach of any justice I can bring to bear. If fate places him in your path, I leave that reckoning to you.
+
+Know this: your name is cleared in Baldur's Gate.
+
+And yet... I would ask that you do not return. Too much has followed in your wake, and my house has paid dearly for it.
+
+Accept this, not as reward, but as acknowledgment of a debt that cannot be repaid.
+
+-Entar Silvershield~
+
+
+// courier/operative name
+@200 = ~Tolan~
+
+
+// quest name
+@1000 = ~Skie Silvershield~
+
+// (unsolved) initial journal
+@1001 = ~Skie Silvershield
+
+I found a dagger wrapped in a note among Irenicus' belongings.
+The note names Skie Silvershield - and suggests her essence is bound within the blade.
+
+If that is true, then her fate may not be sealed.
+
+I cannot pursue this now, but discreet channels in Athkatla could be used to send word.~
+
+// (unsolved) refused gaelan's offer
+@1002 = ~Skie Silvershield
+
+I found a broker in the Slums district - Gaelan Bayle - who may be able to pass word through discreet channels to someone tied to Baldur's Gate.
+
+He asks 200 gold for the service. I have not yet decided to pay it.~
+
+// (unsolved) accepted gaelan's offer, paid, timer 4h started
+@1003 = ~Skie Silvershield
+I paid Gaelan Bayle to pass word through discreet channels, requesting contact with someone tied to Baldur's Gate authority.
+
+If such a person can be found, I am to wait and be approached.~
+
+// (unsolved) met with courier/operative, dagger taken, timer 2w started
+@1004 = ~Skie Silvershield
+
+The dagger is no longer in my possession. It has been entrusted to a courier who claimed ties to Baldur's Gate.
+He seemed capable - confident, even - but I cannot know what awaits him beyond Athkatla. Still, I choose to believe it will reach its destination.
+
+For now, the matter lies beyond me.~
+
+// (finished) courier/operative returned with reward, done
+@1009 = ~Skie Silvershield
+Skie Silvershield has been restored, and my name cleared of her murder.
+Baldur's Gate acknowledges the truth - but prefers I remain distant from its affairs.
+
+So be it.~
+
+
+// gaelan's dialogue
+@2000 = ~I have another matter requiring discretion - one tied to Baldur's Gate.~
+@2001 = ~About that discreet contact...~
+
+@2010 = ~Another matter, is it?
+Well, if it needs the right message passed to the right ears, I may be able to oblige. Quietly.~
+@2011 = ~But discretion costs coin.
+Two hundred gold, and I'll see word sent through channels that know how to keep their mouths shut.~
+@2012 = ~Aye, I remember. If you've the two hundred gold, I can set things in motion.
+If not, then there's no more to say just now.~
+
+@2020 = ~Very well. Two hundred gold. Arrange it.~
+@2021 = ~Not yet.~
+
+@2030 = ~Good. Keep your details spare and your expectations measured.
+If the right person can be reached, you'll be approached. It will not be immediate.~
+@2031 = ~That will do.~
+
+// courier's 1st dialogue
+@2100 = ~You sent word. It reached me.~
+@2110 = ~I am <CHARNAME>. This concerns Baldur's Gate ... and Skie Silvershield.~
+@2120 = ~I know who you are ...~
+@2121 = ~...I see the dagger ...~
+@2122 = ~... could it be ...~
+@2123 = ~I will see it reaches Entar Silvershield.~
+@2124 = ~Safely. And with the urgency it deserves.~
+@2125 = ~It will be done. I will return with word.~
+
+// courier's 2st dialogue
+@2200 = ~I bring word, as promised.~
+@2201 = ~The delivery was made without incident.
+The blade reached Baldur's Gate. The situation has been resolved.~
+@2202 = ~The matter is settled.~
+@2203 = ~And should your path cross his again - see it finished.~
+@2204 = ~Good fortune to you.~

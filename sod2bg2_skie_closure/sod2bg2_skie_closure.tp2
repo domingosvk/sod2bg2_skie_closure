@@ -1,0 +1,110 @@
+BACKUP ~sod2bg2_skie_closure/backup~
+AUTHOR ~domingo, ChatGPT~
+VERSION ~0.9 beta~
+
+LANGUAGE ~English~ ~english~ ~sod2bg2_skie_closure/tra/english.tra~
+
+BEGIN ~SoD to BG2: Skie Closure~
+
+// mod conflict: Skie: The Cost of One Girl's Soul (SkieCost)
+REQUIRE_PREDICATE !(
+    MOD_IS_INSTALLED ~SKIECOST/SKIECOST.TP2~ 0
+ OR MOD_IS_INSTALLED ~SKIECOST/SKIECOST.TP2~ 1
+ OR MOD_IS_INSTALLED ~SKIECOST/SKIECOST.TP2~ 2
+ OR MOD_IS_INSTALLED ~SKIECOST/SKIECOST.TP2~ 3
+ OR MOD_IS_INSTALLED ~SKIECOST/SKIECOST.TP2~ 4
+ OR MOD_IS_INSTALLED ~SKIECOST/SKIECOST.TP2~ 5
+) @1
+
+// ---------------------------------------------------------------------
+// 2 variables:
+//   SOD2BG2_STATE "quest linear ladder"
+//     0 (or missing) = not initialized
+//     1 - if BD_HAVE_SOD=1: insert SD2SKDG and SD2SKNT into AR0602 Chest2 (chest with air elemental statue in Master's Quarters in Irenicus Dungeon level 1)
+//     2 - when SD2SKDG is picked up, add initial journal
+//     3 - talked to Gaelan, rejected offer (or no money), journal entry (this can be skipped directly to state 4)
+//     4 - accepted Gaelan's offer, 4h timer is started, journal entry
+//     5 - courier/operative is spawned in Athkathla's open area, go to player1 and force dialogue
+//     6 - courier/operative banter 1, taken dagger, left scene, added journal entry, timer set to 2 weeks
+//     7 - courier/operative spawned again on same conditions, go to player1 and force dialogue
+//     8 - courier/operative banter 2, given letter, reward (some xp and gold) and left for good, final journal entry quest complete
+//   SOD2BG2_TIMER - timer used in states 4 and 6
+// ---------------------------------------------------------------------
+
+// ---------------------------------------------------------------------
+// Soulstone Dagger, template: DAGG10.ITM (original Soulstone Dagger)
+COPY_EXISTING ~DAGG10.ITM~ ~override/SD2SKDG.ITM~
+  // keep name, change description
+  SAY DESC  @102
+  WRITE_LONG 0x34 0  // price == 0
+  // add critical item flag
+  READ_SHORT 0x18 flags
+  WRITE_SHORT 0x18 (flags BOR 0x0001)
+BUT_ONLY_IF_IT_CHANGES
+// ---------------------------------------------------------------------
+
+// ---------------------------------------------------------------------
+// Folded Note.  template: MISC7O.ITM
+COPY_EXISTING ~MISC7O.ITM~ ~override/SD2SKNT.ITM~
+  // keep name (Note), set description
+  SAY DESC  @104
+  WRITE_LONG 0x34 0  // price == 0
+  // remove critical item flag
+  READ_SHORT 0x18 flags
+  WRITE_SHORT 0x18 (flags BAND 0xFFFE)
+BUT_ONLY_IF_IT_CHANGES
+// ---------------------------------------------------------------------
+
+// ---------------------------------------------------------------------
+// letter from Entar - original MISC7G.ITM letter from jaheira
+COPY_EXISTING ~MISC7G.ITM~ ~override/SD2SKLT.ITM~
+  SAY NAME1 @105
+  SAY NAME2 @105
+  SAY UNIDENTIFIED_DESC @106
+  SAY DESC @106
+  WRITE_LONG 0x34 0  // price == 0
+  // remove critical item flag
+  READ_SHORT 0x18 flags
+  WRITE_SHORT 0x18 (flags BAND 0xFFFE)
+BUT_ONLY_IF_IT_CHANGES
+// ---------------------------------------------------------------------
+
+// Register the journal quest title and journal texts for EE
+ADD_JOURNAL TITLE (@1000) @1001 @1002 @1003 @1004 @1009 USING ~sod2bg2_skie_closure/tra/english.tra~
+
+// ---------------------------------------------------------------------
+// Extend AR0602 script only - item injection to containers, initial quest journal on pickup
+EXTEND_TOP ~AR0602.BCS~ ~sod2bg2_skie_closure/baf/ar0602_init.baf~
+EXTEND_BOTTOM ~AR0602.BCS~ ~sod2bg2_skie_closure/baf/ar0602_trigger.baf~
+// ---------------------------------------------------------------------
+
+// ---------------------------------------------------------------------
+// add dialogue paths to Gaelan Bayle
+COMPILE ~sod2bg2_skie_closure/dialogues/gaelan.d~
+// ---------------------------------------------------------------------
+
+// ---------------------------------------------------------------------
+// courier/operative
+
+// creature
+COPY ~sod2bg2_skie_closure/cre/SD2SKCR.CRE~ ~override~
+  SAY NAME1 @200
+  SAY NAME2 @200
+
+// script
+COMPILE ~sod2bg2_skie_closure/baf/sd2skcr.baf~
+
+// dialogue
+COMPILE ~sod2bg2_skie_closure/dialogues/sd2skcr.d~
+
+// courier/operative spawning script: extend to open Athkathla areas
+EXTEND_TOP ~AR0020.BCS~ ~sod2bg2_skie_closure/baf/courier_spawn.baf~ // gates
+EXTEND_TOP ~AR0300.BCS~ ~sod2bg2_skie_closure/baf/courier_spawn.baf~ // docks
+EXTEND_TOP ~AR0400.BCS~ ~sod2bg2_skie_closure/baf/courier_spawn.baf~ // slums
+EXTEND_TOP ~AR0500.BCS~ ~sod2bg2_skie_closure/baf/courier_spawn.baf~ // bridge
+EXTEND_TOP ~AR0700.BCS~ ~sod2bg2_skie_closure/baf/courier_spawn.baf~ // promenade
+EXTEND_TOP ~AR0800.BCS~ ~sod2bg2_skie_closure/baf/courier_spawn.baf~ // graveyard
+EXTEND_TOP ~AR0900.BCS~ ~sod2bg2_skie_closure/baf/courier_spawn.baf~ // temple
+EXTEND_TOP ~AR1000.BCS~ ~sod2bg2_skie_closure/baf/courier_spawn.baf~ // government
+
+// ---------------------------------------------------------------------

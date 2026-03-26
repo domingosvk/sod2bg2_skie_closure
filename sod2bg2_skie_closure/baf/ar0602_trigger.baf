@@ -1,0 +1,11 @@
+// intended for AR0602 only
+// dagger pickup check in Irenicus' Dungeon level 1
+IF
+  Global("SOD2BG2_STATE","GLOBAL",1)
+  PartyHasItem("SD2SKDG")
+THEN
+  RESPONSE #100
+    // move quest state, add journal
+    SetGlobal("SOD2BG2_STATE","GLOBAL",2)
+    AddJournalEntry(@1001,QUEST)
+END

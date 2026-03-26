@@ -1,0 +1,33 @@
+// move to CHARNAME if too far, states: courier spawned
+IF
+  OR(2)
+    Global("SOD2BG2_STATE","GLOBAL",5)
+    Global("SOD2BG2_STATE","GLOBAL",7)
+  !Range(Player1,4)
+THEN
+  RESPONSE #100
+    MoveToObject(Player1)
+END
+
+// initiate dialogue with CHARNAME if near, states: courier spawned
+IF
+  OR(2)
+    Global("SOD2BG2_STATE","GLOBAL",5)
+    Global("SOD2BG2_STATE","GLOBAL",7)
+  Range(Player1,4)
+  !Global("SOD2BG2_TALK","LOCALS",1)
+THEN
+  RESPONSE #100
+    SetGlobal("SOD2BG2_TALK","LOCALS",1)
+    StartDialogueNoSet(Player1)
+END
+
+// get away after courier finishes dialogue
+IF
+  OR(2)
+    Global("SOD2BG2_STATE","GLOBAL",6)
+    Global("SOD2BG2_STATE","GLOBAL",8)
+THEN
+  RESPONSE #100
+    EscapeArea()
+END
